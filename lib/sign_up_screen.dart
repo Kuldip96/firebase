@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/firebase_auth.dart';
 import 'package:flutter_application_2/login_screen.dart';
-import 'package:flutter_application_2/screen_1.dart';
 import 'package:flutter_application_2/text_fild.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -134,7 +133,6 @@ class _SignUpPageState extends State<SignUpPage> {
       isSigningUp = true;
     });
 
-    String username = _usernameController.text;
     String email = _emailController.text;
     String password = _passwordController.text;
 
@@ -144,11 +142,13 @@ class _SignUpPageState extends State<SignUpPage> {
       isSigningUp = false;
     });
     if (user != null) {
-      // showToast(message: "User is successfully created");
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('User is successfully created')));
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => LoginPage()));
     } else {
-      // showToast(message: "Some error happend");
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Some error happend')));
     }
   }
 }

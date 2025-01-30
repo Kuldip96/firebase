@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/firebase_options.dart';
-import 'package:flutter_application_2/screen_1.dart';
 import 'package:flutter_application_2/sign_up_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

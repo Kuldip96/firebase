@@ -1,13 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/firebase_auth.dart';
 import 'package:flutter_application_2/screen_1.dart';
 import 'package:flutter_application_2/sign_up_screen.dart';
 import 'package:flutter_application_2/text_fild.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -19,9 +15,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _isSigning = false;
   final FirebaseAuthService _auth = FirebaseAuthService();
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   void dispose() {
@@ -95,40 +90,40 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: 10,
               ),
-              GestureDetector(
-                onTap: () {
-                  _signInWithGoogle();
-                },
-                child: Container(
-                  width: double.infinity,
-                  height: 45,
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          FontAwesomeIcons.google,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          "Sign in with Google",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              // GestureDetector(
+              //   onTap: () {
+              //     _signInWithGoogle();
+              //   },
+              //   child: Container(
+              //     width: double.infinity,
+              //     height: 45,
+              //     decoration: BoxDecoration(
+              //       color: Colors.red,
+              //       borderRadius: BorderRadius.circular(10),
+              //     ),
+              //     child: Center(
+              //       child: Row(
+              //         mainAxisAlignment: MainAxisAlignment.center,
+              //         children: [
+              //           Icon(
+              //             FontAwesomeIcons.google,
+              //             color: Colors.white,
+              //           ),
+              //           SizedBox(
+              //             width: 5,
+              //           ),
+              //           Text(
+              //             "Sign in with Google",
+              //             style: TextStyle(
+              //               color: Colors.white,
+              //               fontWeight: FontWeight.bold,
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: 20,
               ),
@@ -179,35 +174,38 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     if (user != null) {
-      // showToast(message: "User is successfully signed in");
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('User is successfully signed in')));
+
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => ScreenOne()));
     } else {
-      // showToast(message: "some error occured");
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('some error occured')));
     }
   }
 
-  _signInWithGoogle() async {
-    final GoogleSignIn _googleSignIn = GoogleSignIn();
+//   _signInWithGoogle() async {
+//     final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-    try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await _googleSignIn.signIn();
+//     try {
+//       final GoogleSignInAccount? googleSignInAccount =
+//           await _googleSignIn.signIn();
 
-      if (googleSignInAccount != null) {
-        final GoogleSignInAuthentication googleSignInAuthentication =
-            await googleSignInAccount.authentication;
+//       if (googleSignInAccount != null) {
+//         final GoogleSignInAuthentication googleSignInAuthentication =
+//             await googleSignInAccount.authentication;
 
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          idToken: googleSignInAuthentication.idToken,
-          accessToken: googleSignInAuthentication.accessToken,
-        );
+//         final AuthCredential credential = GoogleAuthProvider.credential(
+//           idToken: googleSignInAuthentication.idToken,
+//           accessToken: googleSignInAuthentication.accessToken,
+//         );
 
-        await _firebaseAuth.signInWithCredential(credential);
-        Navigator.pushNamed(context, "/home");
-      }
-    } catch (e) {
-// showToast(message: "some error occured $e");
-    }
-  }
+//         await _firebaseAuth.signInWithCredential(credential);
+//         Navigator.pushNamed(context, "/home");
+//       }
+//     } catch (e) {
+// // showToast(message: "some error occured $e");
+//     }
+//   }
 }
